@@ -244,7 +244,7 @@ if (isSending) {
     updateStatus("📤 Mengirim", "Sedang mengirim 25 pesan sekaligus...", "fa-paper-plane");
     
     
-    clearLogs();
+    confirmClearLogs();
     addLog("🚀 Memulai pengiriman 25 pesan...", "start");
     addLog(`📌 Target: ${currentLink}`, "info");
     addLog(`💬 Pesan: "${currentPesan}"`, "info");
@@ -418,7 +418,22 @@ function addLog(message, type = "info") {
 }
 
 function clearLogs() {
-    showClearLogModal(); 
+    document.getElementById("clearLogModal").classList.add("active");
+}
+
+function confirmClearLogs(){
+    logs = [];
+    logContent.innerHTML = `
+        <div class="log-empty">
+            <i class="fas fa-clipboard-list"></i>
+            <p>Log aktivitas akan muncul di sini</p>
+        </div>
+    `;
+    closeClearLogs();
+}
+
+function closeClearLogs(){
+    document.getElementById("clearLogModal").classList.remove("active");
 }
 
 function resetForm() {
@@ -553,25 +568,6 @@ function closeInfoPage(){
 infoPage.classList.remove("active");
 }
 
-function showClearLogModal() {
-    document.getElementById("clearLogModal").classList.add("active");
-}
-
-function closeClearLogModal() {
-    document.getElementById("clearLogModal").classList.remove("active");
-}
-
-function confirmClearLog() {
-    logs = [];
-    logContent.innerHTML = `
-        <div class="log-empty">
-            <i class="fas fa-clipboard-list"></i>
-            <p>Log aktivitas akan muncul di sini</p>
-        </div>
-    `;
-    closeClearLogModal();
-}
-
 const VISIT_KEY = "ngl_unique_device";
 const visitRef = firebase.firestore().collection("stats").doc("visits");
 
@@ -623,9 +619,6 @@ async function initCounter() {
     );
 }
 
-window.confirmClearLog = confirmClearLog;
-window.closeClearLogModal = closeClearLogModal;
-window.showClearLogModal = showClearLogModal;
 window.cancelSending = cancelSending;
 window.confirmSending = confirmSending;
 window.closeSuccessModal = closeSuccessModal;
