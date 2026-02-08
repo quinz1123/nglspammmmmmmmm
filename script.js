@@ -173,9 +173,8 @@ function closeStatistikPage() {
     statPage.classList.remove("active");
 }
 
-function showInfo() {
-    alert("NGL Spam v2.0\n\nFitur:\n• Kirim 25 pesan ke NGL sekaligus\n• Riwayat pengiriman\n• Statistik pengguna realtime\n• Progress tracking\n• Log aktivitas detail\n\nPastikan link NGL valid!\n\nCreator: Agas");
-    closeSidebar();
+function showInfo(){
+openInfoPage();
 }
 
 
@@ -550,6 +549,16 @@ function showAlert(title, msg) {
 
 function closeAlert() {
     document.getElementById("alertModal").classList.remove("active");
+}
+const infoPage=document.getElementById("infoPage");
+
+function openInfoPage(){
+infoPage.classList.add("active");
+closeSidebar();
+}
+
+function closeInfoPage(){
+infoPage.classList.remove("active");
 }
 
 const VISIT_KEY = "ngl_unique_device";
