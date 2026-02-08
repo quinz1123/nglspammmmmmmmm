@@ -1210,3 +1210,63 @@ textarea:focus-visible {
 .creator-btn{margin:20px 0;background:#ff3b7c;color:white;border-radius:15px;padding:12px;display:flex;gap:10px;font-weight:bold}
 .creator-btn img{width:40px;height:40px;border-radius:50%}
 .info-image,.stat-image{width:100%;border-radius:15px;margin-top:15px}
+
+
+.page.active{
+  animation: pageFade .4s ease;
+}
+
+@keyframes pageFade{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:none}
+}
+
+
+.info-card{
+  background:white;
+  border-radius:25px;
+  padding:25px;
+  box-shadow:0 15px 40px rgba(0,0,0,.15);
+  animation: cardPop .5s cubic-bezier(.34,1.56,.64,1);
+}
+
+@keyframes cardPop{
+  from{transform:scale(.9);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+.info-card h3{
+  font-size:22px;
+  margin-bottom:10px;
+}
+
+.info-card ul{
+  margin:10px 0 15px;
+  padding-left:18px;
+}
+
+.info-card li{
+  margin:6px 0;
+  font-weight:500;
+}
+
+.creator-btn{
+  align-items:center;
+  justify-content:center;
+  transition:.3s;
+}
+
+.creator-btn:active{
+  transform:scale(.95);
+  opacity:.85;
+}
+
+.info-image,
+.stat-image{
+  animation: imgFade .6s ease;
+}
+
+@keyframes imgFade{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:none}
+}
