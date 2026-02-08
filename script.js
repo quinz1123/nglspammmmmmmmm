@@ -418,22 +418,7 @@ function addLog(message, type = "info") {
 }
 
 function clearLogs() {
-    document.getElementById("clearLogModal").classList.add("active");
-}
-
-function confirmClearLogs(){
-    logs = [];
-    logContent.innerHTML = `
-        <div class="log-empty">
-            <i class="fas fa-clipboard-list"></i>
-            <p>Log aktivitas akan muncul di sini</p>
-        </div>
-    `;
-    closeClearLogs();
-}
-
-function closeClearLogs(){
-    document.getElementById("clearLogModal").classList.remove("active");
+    showClearLogModal(); 
 }
 
 function resetForm() {
@@ -568,6 +553,25 @@ function closeInfoPage(){
 infoPage.classList.remove("active");
 }
 
+function showClearLogModal() {
+    document.getElementById("clearLogModal").classList.add("active");
+}
+
+function closeClearLogModal() {
+    document.getElementById("clearLogModal").classList.remove("active");
+}
+
+function confirmClearLog() {
+    logs = [];
+    logContent.innerHTML = `
+        <div class="log-empty">
+            <i class="fas fa-clipboard-list"></i>
+            <p>Log aktivitas akan muncul di sini</p>
+        </div>
+    `;
+    closeClearLogModal();
+}
+
 const VISIT_KEY = "ngl_unique_device";
 const visitRef = firebase.firestore().collection("stats").doc("visits");
 
@@ -619,6 +623,9 @@ async function initCounter() {
     );
 }
 
+window.confirmClearLog = confirmClearLog;
+window.closeClearLogModal = closeClearLogModal;
+window.showClearLogModal = showClearLogModal;
 window.cancelSending = cancelSending;
 window.confirmSending = confirmSending;
 window.closeSuccessModal = closeSuccessModal;
