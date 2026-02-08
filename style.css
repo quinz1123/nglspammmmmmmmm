@@ -415,12 +415,20 @@ body {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     z-index: 1100;
     overflow-y: auto;
-    display: none;
+
+    opacity: 0;
+    transform: translateY(30px);
+    pointer-events: none;
+
+    transition: .35s ease;
+    display: flex;
     flex-direction: column;
 }
 
 .statusPage.active {
-    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
 }
 
 .status-header {
