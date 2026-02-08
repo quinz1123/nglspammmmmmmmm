@@ -1,5 +1,5 @@
 
-// FIREBASE INIT
+
 const firebaseConfig = {
   apiKey: "AIzaSyD6YeP5f1AQD-abEjT5puQqT7HhysptLQs",
   authDomain: "ngl-project-9eb40.firebaseapp.com",
@@ -12,7 +12,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// DOM Elements
+
 const linkInput = document.getElementById('link');
 const pesanInput = document.getElementById('pesan');
 const kirimBtn = document.getElementById('kirim');
@@ -38,7 +38,7 @@ const overlay = document.getElementById("overlay");
 const statusPage = document.getElementById("statusPage");
 const statPage = document.getElementById("statPage");
 
-// Variables
+
 let isSending = false;
 let sentCount = 0;
 let failedCount = 0;
@@ -47,7 +47,7 @@ let logs = [];
 let currentLink = '';
 let currentPesan = '';
 
-// Event Listeners
+
 window.addEventListener('DOMContentLoaded', function() {
     initApp();
 });
@@ -57,7 +57,7 @@ function initApp() {
     resetBtn.onclick = resetForm;
     clearLogBtn.onclick = clearLogs;
     
-    // Fix untuk menghapus efek biru saat tap di mobile
+    
     menuBtn.addEventListener('click', openSidebar);
     menuBtn.addEventListener('touchstart', function(e) {
         e.preventDefault();
@@ -70,32 +70,32 @@ function initApp() {
         closeSidebar();
     }, { passive: false });
     
-    // Setup lihat status button
+    
     if (lihatStatusBtn) {
         lihatStatusBtn.onclick = openStatusPage;
     }
     
-    // Pastikan sidebar dan halaman status tertutup saat startup
+    
     closeSidebar();
     closeStatusPage();
     closeStatistikPage();
     
-    // Initialize counter
+    
     initCounter();
     
-    // Load any existing history
+
     if (loadHistory().length > 0) {
         updateStatus("📋 Riwayat Tersedia", "Ada riwayat pengiriman sebelumnya", "fa-history");
     }
     
-    // Setup sidebar untuk mencegah scroll body saat sidebar terbuka
+    
     setupSidebarScroll();
     
-    // Setup semua tombol untuk mencegah efek biru
+    
     setupButtonTapEffects();
 }
 
-// Setup tombol untuk mencegah efek biru
+
 function setupButtonTapEffects() {
     const allButtons = document.querySelectorAll('button');
 
@@ -110,16 +110,16 @@ function setupButtonTapEffects() {
     });
 }
 
-// Setup sidebar scroll
+
 function setupSidebarScroll() {
     const originalStyle = document.body.style.cssText;
     
     menuBtn.addEventListener('click', function() {
         if (sidebar.classList.contains('active')) {
-            // Enable body scroll
+            
             document.body.style.cssText = originalStyle;
         } else {
-            // Disable body scroll
+
             document.body.style.overflow = 'hidden';
             document.body.style.position = 'fixed';
             document.body.style.width = '100%';
@@ -127,17 +127,17 @@ function setupSidebarScroll() {
     });
     
     overlay.addEventListener('click', function() {
-        // Re-enable body scroll
+        
         document.body.style.cssText = originalStyle;
     });
 }
 
-// SIDEBAR FUNCTIONS
+
 function openSidebar() {
     sidebar.classList.add("active");
     overlay.classList.add("active");
     
-    // Disable body scroll
+
     document.body.style.overflow = 'hidden';
     document.body.style.position = 'fixed';
     document.body.style.width = '100%';
@@ -147,13 +147,12 @@ function closeSidebar() {
     sidebar.classList.remove("active");
     overlay.classList.remove("active");
     
-    // Re-enable body scroll
+
     document.body.style.overflow = '';
     document.body.style.position = '';
     document.body.style.width = '';
 }
 
-// STATUS PAGE FUNCTIONS
 function openStatusPage() {
     renderHistory();
     statusPage.classList.add("active");
@@ -164,7 +163,7 @@ function closeStatusPage() {
     statusPage.classList.remove("active");
 }
 
-// STATISTIK PAGE FUNCTIONS
+
 function openStatistikPage() {
     statPage.classList.add("active");
     closeSidebar();
@@ -174,42 +173,41 @@ function closeStatistikPage() {
     statPage.classList.remove("active");
 }
 
-// INFO FUNCTION
 function showInfo() {
     alert("NGL Spam v2.0\n\nFitur:\n• Kirim 25 pesan ke NGL sekaligus\n• Riwayat pengiriman\n• Statistik pengguna realtime\n• Progress tracking\n• Log aktivitas detail\n\nPastikan link NGL valid!\n\nCreator: Agas");
     closeSidebar();
 }
 
-// MAIN FUNCTIONS
+
 function showConfirmationModal() {
     currentLink = linkInput.value.trim();
     currentPesan = pesanInput.value.trim();
 
-    if (!currentLink) {
-        alert("Link NGL harus diisi!");
-        return;
-    }
-    
-    if (!currentPesan) {
-        alert("Pesan harus diisi!");
-        return;
-    }
+if (!currentLink) {
+    showAlert("Error", "Link NGL harus diisi!");
+    return;
+}
 
-    // Auto-add https:// if not present
+if (!currentPesan) {
+    showAlert("Error", "Pesan harus diisi!");
+    return;
+}
+
+    
     if (!currentLink.startsWith("https://") && !currentLink.startsWith("http://")) {
         currentLink = "https://" + currentLink;
     }
 
-    // Validate NGL link format
+    
     if (!currentLink.includes("ngl.link/")) {
         if (confirm("Link tidak mengandung 'ngl.link/'. Apakah Anda yakin ini link NGL yang valid?")) {
-            // Continue anyway
+           
         } else {
             return;
         }
     }
 
-    // Display shortened versions for modal
+    
     const displayLink = currentLink.length > 25 ? currentLink.substring(0, 22) + "..." : currentLink;
     const displayPesan = currentPesan.length > 25 ? currentPesan.substring(0, 22) + "..." : currentPesan;
     
@@ -228,32 +226,32 @@ function confirmSending() {
 }
 
 async function startSending() {
-    if (isSending) {
-        alert("Sedang mengirim pesan, tunggu hingga selesai!");
-        return;
-    }
+if (isSending) {
+    showAlert("Info", "Sedang mengirim pesan, tunggu hingga selesai!");
+    return;
+}
     
     isSending = true;
     
-    // Reset counters
+    
     sentCount = 0;
     failedCount = 0;
     logs = [];
     
-    // UI Reset
+    
     kirimBtn.disabled = true;
     kirimBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MENGIRIM...';
     updateProgress(0);
     updateStatus("📤 Mengirim", "Sedang mengirim 25 pesan sekaligus...", "fa-paper-plane");
     
-    // Clear and setup log
+    
     clearLogs();
     addLog("🚀 Memulai pengiriman 25 pesan...", "start");
     addLog(`📌 Target: ${currentLink}`, "info");
     addLog(`💬 Pesan: "${currentPesan}"`, "info");
 
     try {
-        // Show progress animation
+        
         let progress = 0;
         const progressInterval = setInterval(() => {
             progress += 2;
@@ -265,24 +263,24 @@ async function startSending() {
             progressText.textContent = `${progress}% (0/25)`;
         }, 50);
 
-        // Send ALL 25 messages at once via API
+        
         const result = await sendBulkMessages(currentLink, currentPesan);
         
         clearInterval(progressInterval);
         
-        // Update counters based on API response
+        
         if (result.success) {
             sentCount = result.data.result.berhasil_dikirim || 0;
             failedCount = result.data.result.gagal_dikirim || 0;
             
-            // Update progress to 100%
+            
             updateProgress(100);
             progressText.textContent = `100% (25/25)`;
             
-            // Show success log
+            
             addLog(`✅ API Response: Berhasil ${sentCount}, Gagal ${failedCount}`, "success");
             
-            // Show target username if available
+            
             if (result.data.result.username_target) {
                 addLog(`🎯 Target: ${result.data.result.username_target}`, "info");
             }
@@ -300,29 +298,29 @@ async function startSending() {
         updateStatus("⚠️ Error", "Terjadi kesalahan sistem", "fa-exclamation-triangle");
         addLog("❌ Error sistem: " + error.message, "error");
     } finally {
-        // Cleanup
+        
         kirimBtn.disabled = false;
         kirimBtn.innerHTML = '<i class="fas fa-paper-plane"></i> KIRIM PESAN';
         isSending = false;
         
-        // Save to history
+        
         saveToHistory();
         
-        // Show success modal after delay
+
         setTimeout(showSuccessModal, 1000);
     }
 }
 
 async function sendBulkMessages(link, message) {
     try {
-        // Construct API URL
+        
         const apiUrl = `https://api.deline.web.id/tools/spamngl?url=${encodeURIComponent(link)}&message=${encodeURIComponent(message)}`;
         
-        // Set timeout (30 seconds for bulk operation)
+        
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 30000);
         
-        // Send request
+        
         const response = await fetch(apiUrl, {
             signal: controller.signal,
             headers: {
@@ -333,15 +331,15 @@ async function sendBulkMessages(link, message) {
         
         clearTimeout(timeoutId);
         
-        // Check HTTP status
+        
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}`);
         }
         
-        // Parse response
+        
         const data = await response.json();
         
-        // Check API response
+
         if (data && data.status === true) {
             return { 
                 success: true, 
@@ -357,7 +355,7 @@ async function sendBulkMessages(link, message) {
         }
         
     } catch (error) {
-        // Handle specific errors
+        
         let errorMsg = "Network error";
         if (error.name === 'AbortError') {
             errorMsg = "Timeout (30 detik)";
@@ -372,7 +370,6 @@ async function sendBulkMessages(link, message) {
     }
 }
 
-// UI HELPER FUNCTIONS
 function updateProgress(percentage) {
     progressFill.style.width = percentage + "%";
 }
@@ -389,17 +386,17 @@ function addLog(message, type = "info") {
         minute: '2-digit'
     });
     
-    // Remove empty state if present
+    
     const emptyState = logContent.querySelector('.log-empty');
     if (emptyState) {
         emptyState.remove();
     }
     
-    // Create log item
+    
     const logItem = document.createElement('div');
     logItem.className = `log-item log-${type}`;
     
-    // Clean message
+    
     const cleanMessage = message
         .replace(/✔/g, '✅')
         .replace(/❌/g, '❌')
@@ -410,14 +407,14 @@ function addLog(message, type = "info") {
         <div class="log-time">${time}</div>
     `;
     
-    // Add to top of log
+    
     logContent.insertBefore(logItem, logContent.firstChild);
     
-    // Store in memory (limit to 50 items)
+    
     logs.unshift({ message: cleanMessage, time, type });
     if (logs.length > 50) logs.pop();
     
-    // Auto scroll to top
+    
     logContent.scrollTop = 0;
 }
 
@@ -449,7 +446,7 @@ function showSuccessModal() {
     successCount.textContent = sentCount;
     failCount.textContent = failedCount;
     
-    // Set result message based on success rate
+    
     if (sentCount === totalAttempts) {
         resultMessage.textContent = "🎉 Semua 25 pesan berhasil dikirim!";
     } else if (sentCount >= 20) {
@@ -469,7 +466,6 @@ function closeSuccessModal() {
     successModal.classList.remove("active");
 }
 
-// UTILITY FUNCTIONS
 function saveToHistory() {
     const history = loadHistory();
     
@@ -490,7 +486,6 @@ function saveToHistory() {
     
     history.unshift(historyEntry);
     
-    // Keep only last 10 entries
     if (history.length > 10) {
         history.length = 10;
     }
@@ -519,18 +514,16 @@ function loadHistory() {
 function renderHistory() {
     const history = loadHistory();
     
-    // Clear current logs
     logContent.innerHTML = '';
     
     if (history.length === 0) {
-        addLog("📋 Belum ada riwayat pengiriman", "info");
+        addLog("📋 Belum ada riwayat pengiriman nih", "info");
         return;
     }
     
-    // Add history header
     addLog("📋 RIWAYAT PENGGUNAAN", "start");
     
-    // Show latest 5 entries with better formatting
+
     history.slice(0, 5).forEach((entry, index) => {
         let pesanDisplay = entry.pesan;
         if (pesanDisplay.length > 25) {
@@ -549,15 +542,24 @@ function renderHistory() {
     }
 }
 
-// VISIT COUNTER - FIXED
+function showAlert(title, msg) {
+    document.getElementById("alertTitle").innerText = title;
+    document.getElementById("alertMessage").innerText = msg;
+    document.getElementById("alertModal").classList.add("active");
+}
+
+function closeAlert() {
+    document.getElementById("alertModal").classList.remove("active");
+}
+
 const VISIT_KEY = "ngl_unique_device";
 const visitRef = firebase.firestore().collection("stats").doc("visits");
 
 async function initCounter() {
-    // Get today's date in YYYY-MM-DD format
+
     if (!localStorage.getItem(VISIT_KEY)) {
         try {
-            // Use transaction to prevent race conditions
+
             await db.runTransaction(async (transaction) => {
                 const doc = await transaction.get(visitRef);
                 
@@ -566,7 +568,7 @@ async function initCounter() {
                     currentCount = doc.data().total || 0;
                 }
                 
-                // Update the count
+                
                 transaction.set(visitRef, {
                     total: currentCount + 1,
                     lastUpdate: new Date().toISOString(),
@@ -574,7 +576,7 @@ async function initCounter() {
                 }, { merge: true });
             });
             
-            // Mark as counted for today
+            
             localStorage.setItem(VISIT_KEY, "true");
             console.log("Visitor counted for today");
             
@@ -583,7 +585,7 @@ async function initCounter() {
         }
     }
 
-    // Real-time listener for visitor count
+    
     visitRef.onSnapshot(
         (doc) => {
             if (doc.exists) {
@@ -601,7 +603,6 @@ async function initCounter() {
     );
 }
 
-// EXPORT FUNCTIONS FOR HTML ONCLICK
 window.cancelSending = cancelSending;
 window.confirmSending = confirmSending;
 window.closeSuccessModal = closeSuccessModal;
