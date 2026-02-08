@@ -27,18 +27,16 @@ body {
 
 
 .topbar {
-    position: fixed;
+    position: sticky;
     top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 40px);
-    max-width: 800px;
 
     display: flex;
     align-items: center;
     justify-content: flex-start;
 
+    margin-bottom: 20px;
     padding: 15px 20px;
+
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(12px);
     border-radius: 15px;
@@ -86,8 +84,7 @@ body {
 }
 
 
-..header-banner {
-    margin-top: 80px;
+.header-banner {
     margin-bottom: 25px;
     border-radius: 15px;
     overflow: hidden;
