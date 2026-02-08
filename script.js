@@ -550,16 +550,12 @@ function renderHistory() {
 }
 
 // VISIT COUNTER - FIXED
-const VISIT_KEY = "ngl_visit_today";
+const VISIT_KEY = "ngl_unique_device";
 const visitRef = firebase.firestore().collection("stats").doc("visits");
 
 async function initCounter() {
     // Get today's date in YYYY-MM-DD format
-    const today = new Date().toISOString().split('T')[0];
-    const todayKey = `${VISIT_KEY}_${today}`;
-    
-    // Only count once per day per device
-    if (!localStorage.getItem(todayKey)) {
+    if (!localStorage.getItem(VISIT_KEY)) {
         try {
             // Use transaction to prevent race conditions
             await db.runTransaction(async (transaction) => {
@@ -579,7 +575,7 @@ async function initCounter() {
             });
             
             // Mark as counted for today
-            localStorage.setItem(todayKey, "true");
+            localStorage.setItem(VISIT_KEY, "true");
             console.log("Visitor counted for today");
             
         } catch (error) {
