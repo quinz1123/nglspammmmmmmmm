@@ -418,8 +418,10 @@ function addLog(message, type = "info") {
 }
 
 function clearLogs() {
-    if (!confirm("Hapus semua log aktivitas?")) return;
-    
+    document.getElementById("clearLogModal").classList.add("active");
+}
+
+function confirmClearLogs(){
     logs = [];
     logContent.innerHTML = `
         <div class="log-empty">
@@ -427,6 +429,11 @@ function clearLogs() {
             <p>Log aktivitas akan muncul di sini</p>
         </div>
     `;
+    closeClearLogs();
+}
+
+function closeClearLogs(){
+    document.getElementById("clearLogModal").classList.remove("active");
 }
 
 function resetForm() {
@@ -449,7 +456,7 @@ function showSuccessModal() {
     if (sentCount === totalAttempts) {
         resultMessage.textContent = "🎉 Semua 25 pesan berhasil dikirim!";
     } else if (sentCount >= 20) {
-        resultMessage.textContent = "✅ Sangat berhasil! Hanya sedikit gagal";
+        resultMessage.textContent = "Done yach";
     } else if (sentCount >= 10) {
         resultMessage.textContent = "👍 Lumayan, setengah lebih berhasil";
     } else if (sentCount > 0) {
