@@ -86,7 +86,8 @@ body {
 }
 
 
-.header-banner {
+..header-banner {
+    margin-top: 80px;
     margin-bottom: 25px;
     border-radius: 15px;
     overflow: hidden;
