@@ -1201,3 +1201,12 @@ textarea:focus-visible {
     background: #667eea;
     color: white;
 }
+
+.page{display:none;position:fixed;inset:0;background:linear-gradient(135deg,#6c7cff,#a855f7);overflow:auto;z-index:999;padding:20px}
+.page.active{display:block}
+.page-header{display:flex;gap:15px;color:white;margin-bottom:20px}
+.page-header button{background:rgba(255,255,255,.2);border:none;padding:8px 15px;border-radius:10px;color:white}
+.info-card{background:white;border-radius:20px;padding:20px}
+.creator-btn{margin:20px 0;background:#ff3b7c;color:white;border-radius:15px;padding:12px;display:flex;gap:10px;font-weight:bold}
+.creator-btn img{width:40px;height:40px;border-radius:50%}
+.info-image,.stat-image{width:100%;border-radius:15px;margin-top:15px}
