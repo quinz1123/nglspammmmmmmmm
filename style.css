@@ -1,4 +1,4 @@
-/* RESET & BASE */
+
 * {
     margin: 0;
     padding: 0;
@@ -14,7 +14,7 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
-/* CONTAINER */
+
 .container {
     max-width: 800px;
     margin: 0 auto;
@@ -24,8 +24,12 @@ body {
     z-index: 1;
 }
 
-/* TOP BAR */
-.topbar {
+
+..topbar {
+    position: sticky;
+    top: 10px;
+    z-index: 50;
+
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -76,7 +80,7 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* HEADER BANNER */
+
 .header-banner {
     margin-bottom: 25px;
     border-radius: 15px;
@@ -93,7 +97,7 @@ body {
     filter: brightness(0.9);
 }
 
-/* CARDS */
+
 .card {
     background: white;
     border-radius: 20px;
@@ -128,7 +132,7 @@ body {
     font-size: 1rem;
 }
 
-/* FORM */
+
 .form-container {
     display: flex;
     flex-direction: column;
@@ -179,7 +183,7 @@ body {
     opacity: 1;
 }
 
-/* INFO BOX */
+
 .info-box {
     background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
     padding: 15px 20px;
@@ -202,7 +206,7 @@ body {
     margin: 0;
 }
 
-/* BUTTONS */
+
 .button-group {
     display: flex;
     gap: 15px;
@@ -253,7 +257,7 @@ body {
     transform: translateY(-3px);
 }
 
-/* SIDEBAR */
+
 .sidebar {
     position: fixed;
     left: -300px;
@@ -300,7 +304,7 @@ body {
     transform: rotate(90deg);
 }
 
-/* SIDEBAR CONTENT */
+
 .sidebar-content {
     flex: 1;
     padding: 20px 0;
@@ -367,7 +371,7 @@ body {
     position: relative;
 }
 
-/* SIDEBAR SCROLLBAR */
+
 .sidebar-content::-webkit-scrollbar {
     width: 4px;
 }
@@ -381,7 +385,7 @@ body {
     border-radius: 10px;
 }
 
-/* OVERLAY */
+
 .overlay {
     display: none;
     position: fixed;
@@ -398,7 +402,7 @@ body {
     display: block;
 }
 
-/* STATUS PAGE */
+
 .statusPage {
     position: fixed;
     top: 0;
@@ -465,7 +469,7 @@ body {
     padding: 20px;
 }
 
-/* STATUS INDICATOR */
+
 .status-indicator {
     display: flex;
     align-items: center;
@@ -510,7 +514,7 @@ body {
     opacity: 0.8;
 }
 
-/* PROGRESS */
+
 .progress-container {
     margin: 30px 0;
     background: #f8fafc;
@@ -563,7 +567,7 @@ body {
     font-family: 'Courier New', monospace;
 }
 
-/* LOG CONTAINER */
+
 .log-container {
     background: white;
     border-radius: 15px;
@@ -593,7 +597,7 @@ body {
     min-width: 200px;
 }
 
-/* TOMBOL HAPUS LOG */
+
 #clear-log {
     padding: 10px 18px;
     background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
@@ -631,7 +635,7 @@ body {
     padding: 10px;
 }
 
-/* LOG ITEMS */
+
 .log-item {
     padding: 12px 15px;
     margin: 8px 0;
@@ -668,7 +672,7 @@ body {
     font-weight: 500;
 }
 
-/* LOG TYPES */
+
 .log-success {
     border-left-color: #10b981;
     background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(16, 185, 129, 0.02) 100%);
@@ -718,7 +722,7 @@ body {
     font-size: 1.1rem;
 }
 
-/* STATISTIK PAGE */
+
 #statPage .result-container {
     text-align: center;
 }
@@ -745,7 +749,7 @@ body {
     100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* MODALS */
+
 .modal {
     display: none;
     position: fixed;
@@ -799,7 +803,7 @@ body {
     justify-content: flex-end;
 }
 
-/* CONFIRMATION MODAL */
+
 .confirmation-content {
     text-align: center;
 }
@@ -863,7 +867,7 @@ body {
     margin-top: 15px;
 }
 
-/* SUCCESS MODAL */
+
 .result-summary-small {
     text-align: center;
 }
@@ -945,7 +949,7 @@ body {
     border-left: 4px solid #3b82f6;
 }
 
-/* BUTTONS IN MODALS */
+
 .btn-cancel-small, .btn-confirm-small, .btn-close-small {
     padding: 12px 25px;
     border: none;
@@ -997,7 +1001,7 @@ body {
     box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
 }
 
-/* FOOTER */
+
 footer {
     text-align: center;
     color: white;
@@ -1015,7 +1019,7 @@ footer i {
     color: #fbbf24;
 }
 
-/* RESPONSIVE */
+
 @media (max-width: 768px) {
     .container {
         padding: 15px;
@@ -1130,7 +1134,7 @@ footer i {
     }
 }
 
-/* SCROLLBAR */
+
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -1149,7 +1153,7 @@ footer i {
     background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
 }
 
-/* FOCUS STATES */
+
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
